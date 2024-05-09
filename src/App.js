@@ -1,25 +1,41 @@
-import logo from './logo.svg';
+import React, {useState} from 'react';
 import './App.css';
 
 function App() {
-  return (
-    <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.js</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
-    </div>
-  );
+	const [timerStart, setTimerStart] = useState(0)
+	const [timerId, setTimerId] = useState(null)
+
+	const timerUp = () => {
+		setTimerStart(timerStart => timerStart + 1)
+	}
+
+	const startTimer = () => {
+		const id = setInterval(timerUp, 500)
+		setTimerId(id)
+	}
+
+	function timerStop() {
+		clearInterval(timerId)
+	}
+
+	const startReset = () => {
+		setTimerStart(timerStart => timerStart = 0)
+		clearInterval(timerId)
+	}
+
+	return (
+		<div className="App">
+			<header className="App-header">
+				<p>{timerStart}</p>
+
+				<div className='App-menu'>
+					<button onClick={startTimer}>start</button>
+					<button onClick={timerStop}>pause</button>
+					<button onClick={startReset}>reset</button>
+				</div>
+			</header>
+		</div>
+	);
 }
 
 export default App;
